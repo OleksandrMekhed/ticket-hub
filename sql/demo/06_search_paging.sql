@@ -110,12 +110,6 @@ FROM locations AS l
 ORDER BY l.location_id ASC, l.name ASC
 LIMIT 3 OFFSET 3;
 
--- Page 3
-SELECT l.location_id, l.name, l.city, l.address
-FROM locations AS l
-ORDER BY l.location_id ASC, l.name ASC
-LIMIT 3 OFFSET 6;
-
 -- Count total pages of locations
 SELECT COUNT(*) AS total_locations,
        CEIL(COUNT(*) / 3.0) AS total_pages
