@@ -1,10 +1,8 @@
 USE TicketDB;
 
--- =====================================================================================================================
--- Search, sorting and pagination.
--- Sections: categories, locations, events, tickets, users
--- WHERE + LIKE / NOT LIKE, BETWEEN, IN, AND / OR, ORDER BY (one and two columns), LIMIT + OFFSET (pagination), COUNT + CEIL (number of pages)
--- =====================================================================================================================
+
+-- WHERE + LIKE / NOT LIKE, BETWEEN, IN, AND / OR, ORDER BY
+
 
 -- categories ==========================================================================================================
 
@@ -39,22 +37,6 @@ SELECT c.category_id, c.name
 FROM categories AS c
 ORDER BY c.category_id ASC ;
 
--- Page 1 (first 2 categories)
-SELECT c.category_id, c.name
-FROM categories AS c
-ORDER BY c.name ASC, c.category_id ASC
-LIMIT 2 OFFSET 0;
-
--- Page 2 (next 2 categories)
-SELECT c.category_id, c.name
-FROM categories AS c
-ORDER BY c.name ASC, c.category_id ASC
-LIMIT 2 OFFSET 2;
-
--- Count total pages of categories
-SELECT COUNT(*) AS total_categories,
-       CEIL(COUNT(*) / 2.0) AS total_pages
-FROM categories;
 
 -- locations ===========================================================================================================
 -- City start with 'Got'
@@ -98,22 +80,6 @@ SELECT l.location_id, l.name, l.city, l.address
 FROM locations AS l
 ORDER BY l.location_id DESC ;
 
--- Page 1
-SELECT l.location_id, l.name, l.city, l.address
-FROM locations AS l
-ORDER BY l.location_id ASC, l.name ASC
-LIMIT 3 OFFSET 0;
-
--- Page 2
-SELECT l.location_id, l.name, l.city, l.address
-FROM locations AS l
-ORDER BY l.location_id ASC, l.name ASC
-LIMIT 3 OFFSET 3;
-
--- Count total pages of locations
-SELECT COUNT(*) AS total_locations,
-       CEIL(COUNT(*) / 3.0) AS total_pages
-FROM locations;
 
 -- events ==============================================================================================================
 
@@ -185,35 +151,6 @@ SELECT e.event_id, e.category_id, e.location_id, e.title, e.starts_at, e.price
 FROM events AS e
 ORDER BY e.title ASC, e.event_id ASC;
 
---  Page 1
-SELECT e.event_id, e.category_id, e.location_id, e.title, e.starts_at, e.price
-FROM events AS e
-ORDER BY e.starts_at ASC, e.event_id ASC
-LIMIT 3 OFFSET 0;
-
--- Page 2
-SELECT e.event_id, e.category_id, e.location_id, e.title, e.starts_at, e.price
-FROM events AS e
-ORDER BY e.starts_at ASC, e.event_id ASC
-LIMIT 3 OFFSET 3;
-
--- Page 3
-SELECT e.event_id, e.category_id, e.location_id, e.title, e.starts_at, e.price
-FROM events AS e
-ORDER BY e.starts_at ASC, e.event_id ASC
-LIMIT 3 OFFSET 6;
-
--- Page 4
-SELECT e.event_id, e.category_id, e.location_id, e.title, e.starts_at, e.price
-FROM events AS e
-ORDER BY e.starts_at ASC, e.event_id ASC
-LIMIT 3 OFFSET 9;
-
--- Count total pages of event
-SELECT COUNT(*) AS total_events,
-       CEIL(COUNT(*) / 3.0) AS total_pages
-FROM events;
-
 -- Search + filter + sort + page together
 SELECT e.event_id, e.title, e.starts_at, e.price
 FROM events AS e
@@ -276,35 +213,6 @@ SELECT CONCAT(u.full_name, ' (#', u.user_id, ')') AS user_label
 FROM users AS u
 ORDER BY u.user_id ASC;
 
--- Page 1
-SELECT u.user_id, u.full_name, u.email
-FROM users AS u
-ORDER BY u.user_id ASC, u.full_name ASC
-LIMIT 3 OFFSET 0;
-
--- Page 2
-SELECT u.user_id, u.full_name, u.email
-FROM users AS u
-ORDER BY u.user_id ASC, u.full_name ASC
-LIMIT 3 OFFSET 3;
-
--- Page 3
-SELECT u.user_id, u.full_name, u.email
-FROM users AS u
-ORDER BY u.user_id ASC, u.full_name ASC
-LIMIT 3 OFFSET 6;
-
--- Page 4
-SELECT u.user_id, u.full_name, u.email
-FROM users AS u
-ORDER BY u.user_id ASC, u.full_name ASC
-LIMIT 3 OFFSET 9;
-
--- Count page of users
-SELECT COUNT(*) AS total_users,
-       CEIL(COUNT(*) / 3.0) AS total_pages
-FROM users;
-
 -- Search + filter + sort + page together
 SELECT u.user_id, u.full_name, u.email
 FROM users AS u
@@ -366,41 +274,6 @@ JOIN users AS u ON u.user_id = t.user_id
 JOIN events AS e ON e.event_id = t.event_id
 WHERE t.event_id = 1
 ORDER BY t.seat_label ASC, t.ticket_id ASC;
-
--- Page 1
-SELECT t.ticket_id, t.user_id, t.event_id, t.seat_label, t.price
-FROM tickets AS t
-ORDER BY t.price ASC, t.ticket_id ASC
-LIMIT 5 OFFSET 0;
-
--- Page 2
-SELECT t.ticket_id, t.user_id, t.event_id, t.seat_label, t.price
-FROM tickets AS t
-ORDER BY t.price ASC, t.ticket_id ASC
-LIMIT 5 OFFSET 5;
-
--- Page 3
-SELECT t.ticket_id, t.user_id, t.event_id, t.seat_label, t.price
-FROM tickets AS t
-ORDER BY t.price ASC, t.ticket_id ASC
-LIMIT 5 OFFSET 10;
-
--- Page 4
-SELECT t.ticket_id, t.user_id, t.event_id, t.seat_label, t.price
-FROM tickets AS t
-ORDER BY t.price ASC, t.ticket_id ASC
-LIMIT 5 OFFSET 15;
-
--- Page 5
-SELECT t.ticket_id, t.user_id, t.event_id, t.seat_label, t.price
-FROM tickets AS t
-ORDER BY t.price ASC, t.ticket_id ASC
-LIMIT 5 OFFSET 20;
-
--- Count total pages of tickets
-SELECT COUNT(*) AS total_tickets,
-       CEIL(COUNT(*) / 5.0) AS total_pages
-FROM tickets;
 
 -- Search + filter + sort + page together
 SELECT t.ticket_id, t.user_id, t.event_id, t.seat_label, t.price
