@@ -44,7 +44,7 @@ CREATE TABLE events (
 -- Table users ---------------------------------------------------------------------------------------------------------
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
-    name    VARCHAR(100) NOT NULL,
+    full_name    VARCHAR(100) NOT NULL,
     email   VARCHAR(100) NOT NULL,
 
     -- Prevents creating two user accounts with the same email address

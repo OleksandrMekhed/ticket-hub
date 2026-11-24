@@ -34,7 +34,7 @@ INSERT INTO events (category_id, location_id, title, starts_at, price) VALUES
     (3, 5, 'A Midsummer Nights Dream', '2026-12-15 18:30:00', 400.00);
 
 -- Users ---------------------------------------------------------------------------------------------------------------
-INSERT INTO users (name, email) VALUES
+INSERT INTO users (full_name, email) VALUES
     ('Anna Lindqvist',   'anna.lindqvist@example.com'),
     ('Erik Johansson',   'erik.johansson@example.com'),
     ('Maria Svensson',   'maria.svensson@example.com'),

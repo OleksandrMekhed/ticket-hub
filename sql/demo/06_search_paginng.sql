@@ -232,78 +232,78 @@ LIMIT 3 OFFSET 0;
 
 -- users ===============================================================================================================
 -- Name ends with "son"
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-WHERE u.name LIKE '%son';
+WHERE u.full_name LIKE '%son';
 
 -- Name start with 'Anna%'
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-WHERE u.name LIKE 'Anna%';
+WHERE u.full_name LIKE 'Anna%';
 
 -- Name does not contain '%ia%'
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-WHERE u.name NOT LIKE '%ia%';
+WHERE u.full_name NOT LIKE '%ia%';
 
 -- Email contain '%son%'
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
 WHERE u.email LIKE '%son%';
 
 -- Filtering by name and email
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-WHERE u.name = 'Oscar Berg' AND u.email = 'oscar.berg@example.com';
+WHERE u.full_name = 'Oscar Berg' AND u.email = 'oscar.berg@example.com';
 
 -- Order by ID DESC
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
 ORDER BY u.user_id DESC ;
 
 -- Order by name and user ID ASC
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-ORDER BY u.name ASC, u.user_id ASC;
+ORDER BY u.full_name ASC, u.user_id ASC;
 
 -- Only some users, picked by id
-SELECT u.user_id, u.name
+SELECT u.user_id, u.full_name
 FROM users AS u
 WHERE u.user_id IN (3, 5, 10);
 
 -- TRIM removes spaces at the start and end of a text
-SELECT u.name AS original_name,
-       TRIM(u.name) AS clean_name
+SELECT u.full_name AS original_name,
+       TRIM(u.full_name) AS clean_name
 FROM users AS u
 WHERE u.user_id = 9;
 
 -- CONCAT glues several values into one text, example - "Anna Lindqvist (#1)"
-SELECT CONCAT(u.name, ' (#', u.user_id, ')') AS user_label
+SELECT CONCAT(u.full_name, ' (#', u.user_id, ')') AS user_label
 FROM users AS u
 ORDER BY u.user_id ASC;
 
 -- Page 1
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-ORDER BY u.user_id ASC, u.name ASC
+ORDER BY u.user_id ASC, u.full_name ASC
 LIMIT 3 OFFSET 0;
 
 -- Page 2
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-ORDER BY u.user_id ASC, u.name ASC
+ORDER BY u.user_id ASC, u.full_name ASC
 LIMIT 3 OFFSET 3;
 
 -- Page 3
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-ORDER BY u.user_id ASC, u.name ASC
+ORDER BY u.user_id ASC, u.full_name ASC
 LIMIT 3 OFFSET 6;
 
 -- Page 4
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-ORDER BY u.user_id ASC, u.name ASC
+ORDER BY u.user_id ASC, u.full_name ASC
 LIMIT 3 OFFSET 9;
 
 -- Count page of users
@@ -312,10 +312,10 @@ SELECT COUNT(*) AS total_users,
 FROM users;
 
 -- Search + filter + sort + page together
-SELECT u.user_id, u.name, u.email
+SELECT u.user_id, u.full_name, u.email
 FROM users AS u
-WHERE u.name LIKE '%son%'
-ORDER BY u.user_id ASC, u.name ASC
+WHERE u.full_name LIKE '%son%'
+ORDER BY u.user_id ASC, u.full_name ASC
 LIMIT 3 OFFSET 0;
 
 -- tickets =============================================================================================================
@@ -366,7 +366,7 @@ FROM tickets AS t
 ORDER BY t.seat_label ASC, t.ticket_id ASC;
 
 -- Tickets with user name and event title - JOIN + filter + sort
-SELECT t.ticket_id, u.name AS user_name, e.title AS event_title, t.seat_label, t.price
+SELECT t.ticket_id, u.full_name AS user_name, e.title AS event_title, t.seat_label, t.price
 FROM tickets AS t
 JOIN users AS u ON u.user_id = t.user_id
 JOIN events AS e ON e.event_id = t.event_id
