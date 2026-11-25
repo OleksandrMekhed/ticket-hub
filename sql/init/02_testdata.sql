@@ -1,5 +1,10 @@
 USE TicketDB;
 
+
+-- Admins (the password is stored as a SHA-256 hash, never as plain text) ----------------------------------------------
+INSERT INTO admins (email, password_hash) VALUES
+    ('admin@test.com', SHA2('1234', 256));
+
 -- Categories ----------------------------------------------------------------------------------------------------------
 INSERT INTO categories (name) VALUES
     ('Cinema'),

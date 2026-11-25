@@ -1,7 +1,18 @@
-SELECT VERSION() AS mysql_version,
-    DATABASE() AS current_database;
-
 USE TicketDB;
+
+
+-- Table admins (login accounts of administrators for the console program) -------------------------------------------
+CREATE TABLE admins (
+    admin_id      INT AUTO_INCREMENT PRIMARY KEY,
+    email         VARCHAR(100) NOT NULL,
+    password_hash CHAR(64)     NOT NULL,
+    role          VARCHAR(30)  NOT NULL DEFAULT 'admin',
+    is_active     BOOLEAN      NOT NULL DEFAULT TRUE,
+    created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    -- Prevents two administrator accounts with the same email
+    UNIQUE (email)
+) ENGINE=InnoDB;
 
 -- Table categories ----------------------------------------------------------------------------------------------------
 CREATE TABLE categories (
