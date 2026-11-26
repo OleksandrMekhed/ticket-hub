@@ -1,7 +1,7 @@
 USE TicketDB;
 
 
--- Admins (the password is stored as a SHA-256 hash, never as plain text) ----------------------------------------------
+-- Admins (the password is stored as a SHA-256 hash) -------------------------------------------------------------------
 INSERT INTO admins (email, password_hash) VALUES
     ('admin@test.com', SHA2('1234', 256));
 
