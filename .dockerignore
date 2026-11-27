@@ -1,0 +1,23 @@
+### venv ###
+.venv/
+
+### git ###
+.git/
+
+### idea ###
+.idea/
+
+### pycache ###
+__pycache__/
+
+### .env ###
+.env
+
+### sql ###
+sql/
+
+### docs ###
+docs/
+
+### README.md ###
+README.md

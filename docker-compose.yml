@@ -1,3 +1,19 @@
+name: ticket-db
+x-app-base: &app-base
+  image: ticket-db-app
+  build:
+    context: .
+    dockerfile: Dockerfile
+  environment:
+    DB_HOST: mysql
+    DB_PORT: "3306"
+    MYSQL_DATABASE: ${MYSQL_DATABASE}
+    MYSQL_USER: ${MYSQL_USER}
+    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  depends_on:
+    mysql:
+      condition: service_healthy
+
 services:
   mysql:
     image: mysql:8.4
@@ -8,7 +24,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "127.0.0.1:3307:3306"
+      - "127.0.0.1:${DB_PORT:-3307}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./sql/init:/docker-entrypoint-initdb.d:ro
@@ -18,5 +34,18 @@ services:
       timeout: 5s
       retries: 30
       start_period: 30s
+
+
+  check:
+    <<: *app-base
+    command: ["python", "-m", "app.check"]
+
+
+  app:
+    <<: *app-base
+    profiles: ["app"]
+    stdin_open: true
+    tty: true
+
 volumes:
   mysql_data:
